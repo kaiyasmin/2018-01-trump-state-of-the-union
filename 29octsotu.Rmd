@@ -8,6 +8,15 @@ output: html_document
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
+library(readr)
+library(dplyr)
+library(stringr)
+library(lubridate)
+library(tidyr)
+library(tidytext)
+library(quanteda)
+library(ggplot2)
+library(DT)
 ```
 
 ```{r}
@@ -16,6 +25,26 @@ presidents <- read_csv("data/presidents.csv")
 
 sou <- sou %>%
   left_join(presidents)
+```
+
+```{r}
+tidy_sou <- 
+  sou %>%
+  unnest_tokens(word, text) 
+
+tidy_sou %>%
+  inner_join(get_sentiments("afinn")) %>%
+  group_by(president) %>%
+  summarize(rating = mean(score)) %>%
+  arrange(desc(rating))
+  ggplot(aes(x = date, y = rating)) + geom_line() + 
+    xlab("Date") +
+    ylab("Average Sentiment Score using AFINN Dictionary") +
+    ggtitle("State of the Union Sentiment Scores")
+
+
+  
+  
 
 ```
 
