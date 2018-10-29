@@ -40,7 +40,7 @@ tidy_sou %>%
   ggplot(aes(x = date, y = rating)) + geom_line() + 
     xlab("Date") +
     ylab("Average Sentiment Score using AFINN Dictionary") +
-    ggtitle("State of the Union Sentiment Scores")
+    ggtitle("State of the Union Sentiment Scores") 
 
 
   
